@@ -10,12 +10,7 @@ Future<String> generatePassphrase({wordsCount = 4, separator = " ", dictionaryPa
 
   var len = dict.length;
 
-  List<String> result;
-
-  for (var i = 0; i < wordsCount  ; i++) {
-    var word = dict[rand.nextInt(len)].toLowerCase();
-    result.add(word);
-  }
+  List<String> result = List(wordsCount).map((_) => dict[rand.nextInt(len)].toLowerCase()).toList();
 
   return result.join(separator);
 }

@@ -1,4 +1,4 @@
-name: xkcd_passphrase_generator
+name: passphrase_generator
 description: Simple app to generate random passphrases.
 
 # The following defines the version and build number for your application.

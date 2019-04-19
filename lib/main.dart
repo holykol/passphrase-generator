@@ -11,11 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Passphrase generator',
+      title: 'Passphrase Generator',
       theme: ThemeData(
         primarySwatch: Colors.cyan,
       ),
-      home: MyHomePage(title: 'Passphrase generator'),
+      home: MyHomePage(title: 'Passphrase Generator'),
     );
   }
 }
