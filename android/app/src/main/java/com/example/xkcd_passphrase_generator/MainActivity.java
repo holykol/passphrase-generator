@@ -1,4 +1,4 @@
-package com.example.xkcd_password_generator;
+package com.example.xkcd_passphrase_generator;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
