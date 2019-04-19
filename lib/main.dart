@@ -189,7 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   _buildHeader(context, "Copying passphrases"),
                   Text(
-                    "Tap on the passphrase to copy it to the clipboard. Note that the system clipboard is available for all applications on the device, so it is recommended to write your new passphrase on a piece of paper.",
+                    "Tap on the passphrase to copy it to the clipboard. WARNING: Clipboard contents are available for all applications on the device.",
                     style: Theme.of(context).textTheme.body1,
                   ),
                 ],
