@@ -4,6 +4,7 @@ import 'generator.dart';
 
 import 'package:backdrop/backdrop.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,20 +31,38 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-  double _wordCount = 4.0;
+  int _wordCount = 5;
   String _selectedDictionary = "small";
 
-  void _handleDictionaryChange(String value) {
+  @override
+  void initState() {
+    super.initState();
+    _prefs.then((SharedPreferences prefs) {
+      // Asynchronously load preferences
+      setState(() {
+        this._selectedDictionary = (prefs.getString("dictionary") ?? "small");
+        this._wordCount = (prefs.getInt("wordCount") ?? 5);
+      });
+    });
+  }
+
+  void _handleDictionaryChange(String value) async {
+    var prefs = await _prefs;
+    await prefs.setString("dictionary", value);
     setState(() {
       _selectedDictionary = value;
     });
   }
 
-  void _handleWordCountChange(double value) {
+  void _handleWordCountChange(double value) async {
+    var val = value.floor();
+    var prefs = await _prefs;
+    await prefs.setInt("wordCount", val);
+
     setState(() {
-      _wordCount = value;
+      _wordCount = val;
     });
   }
 
@@ -61,7 +80,6 @@ class _MyHomePageState extends State<MyHomePage> {
       frontLayer: Container(
         padding: EdgeInsets.all(10.0),
         child: Form(
-          key: this._formKey,
           child: ListView(
             children: <Widget>[
               Row(
@@ -86,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Text("Words count"),
                   Expanded(
                     child: Slider(
-                      value: _wordCount,
+                      value: _wordCount.toDouble(),
                       divisions: 10,
                       min: 2.0,
                       label: _wordCount.floor().toString() + " words",
@@ -169,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
               padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,//
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   _buildHeader(context, "About"),
